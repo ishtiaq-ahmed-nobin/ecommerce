@@ -1,0 +1,24 @@
+.sidebar
+{
+	min-height: calc(100vh - 56px);
+	border-right: 1px solid #ddd;
+}
+
+.sidebar .nav-link
+{
+	color: #333;
+	padding: 10px 15px;
+}
+
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover
+{
+	background: #007bff;
+	color: #fff;
+	border-radius: 4px;
+}
+
+.content-area
+{
+	padding: 20px;
+}
