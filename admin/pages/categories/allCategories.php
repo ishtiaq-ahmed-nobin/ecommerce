@@ -71,16 +71,16 @@ if (isset($_GET['msg']) && $_GET['msg'] === 'updated') $successmsg = "Product Up
 if (isset($_GET['msg']) && $_GET['msg'] === 'deleted') $successmsg = "Product Deleted";
 //Fetch all products, category, attributes
 
-$sql = "SELECT 
+$sql = "SELECT * FROM categories;
 
-			p.*,
-			c.category_name,
-			a.sizes,
-			a.colors
-		FROM products p
-		LEFT JOIN categories c ON c.id = p.category_id
-		LEFT JOIN attributes a ON a.product_id = p.id
-		ORDER BY p.id DESC";
+		-- 	c.*,
+		-- 	c.category_name,
+		-- 	a.sizes,
+		-- 	a.colors
+		-- FROM categories c
+		-- LEFT JOIN categories c ON c.id = p.category_id
+		-- LEFT JOIN attributes a ON a.product_id = p.id
+		-- ORDER BY p.id DESC";
 
 $stmt = $DB_con->prepare($sql);
 $stmt->execute();
@@ -175,8 +175,6 @@ function renderColorBadges($colorsCSV)
 				<thead class="thead-dark">
 					<tr>
 						<th style="width: 70px;">#</th>
-						<th>Products</th>
-						<th style="width: 140px;">Stock</th>
 						<th style="width: 220px;">Category</th>
 						<th style="width: 180px;">Actions</th>
 					</tr>
@@ -195,44 +193,7 @@ function renderColorBadges($colorsCSV)
 							?>
 							<tr>
 								<td><?php echo $i + 1; ?></td>
-
-								<td>
-									<div class="d-flex">
-										<div class="mr-3">
-											<?php if ($img && is_file($img)): ?>
-												<img src="<?php echo htmlspecialchars($img); ?>" class="thumb" alt="">
-											<?php else : ?>
-												<div class="thumb d-flex align-items-center justify-content-center text-muted">No Image
-												</div>
-											<?php endif; ?>
-										</div>
-
-										<div class="attr-wrap">
-											<div><strong><?php echo htmlspecialchars($p['product_name']); ?></strong></div>
-											<div class="text-muted small">
-												<?php echo htmlspecialchars($p['description']); ?>
-											</div>
-
-											<?php if ((int)$p['has_attributes'] === 1): ?>
-												<div class="mt-2">
-													<div class="mb-1">
-														<small class="text-dark"><strong>Sizes:</strong></small><br>
-														<?php echo renderSizeBadges($p['sizes'] ?? ''); ?>
-													</div>
-
-													<div>
-														<small class="text-dark"><strong>Colors:</strong></small><br>
-														<?php echo renderColorBadges($p['colors'] ?? ''); ?>
-													</div>
-												</div>
-											<?php endif; ?>
-										</div>
-									</div>
-		</div>
-		</td>
-
-		<td><?php echo (int)$p['stock_amount']; ?></td>
-		<td><?php echo htmlspecialchars($p['category_name'] ?? '__'); ?></td>
+								<td><?php echo htmlspecialchars($p['category_name'] ?? '__'); ?></td>
 
 		<td>
 			<a href="index.php?page=editProduct&pid=<?php echo urlencode($encId); ?>" class="btn btn-sm btn-warning">Edit</a>
